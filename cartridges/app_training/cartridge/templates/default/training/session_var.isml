@@ -1,3 +1,5 @@
-<isset name="var" value="${24}" scope="session"/>
-<h2>Just the value: ${session.custom.var}</h2>
-<h2>Added to it: ${session.custom.var + 0.5}</h2>
+<isdecorate template="common/layout/page">
+    <isset name="var" value="${24}" scope="session"/>
+    <h2>Just the value: ${session.custom.var}</h2>
+    <h2>Added to it: ${session.custom.var + 0.5}</h2>
+</isdecorate>
