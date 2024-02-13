@@ -1,0 +1,7 @@
+<h4>For a product ID of 'P4800M', it should be the laptop briefcase.</h4>
+
+<isif condition="${ pdict.givenID === 'P0048M' }">
+    <h4>Expected ID detected</h4>
+<iselse>
+    <h4>Another  ID detected</h4>
+</isif>
