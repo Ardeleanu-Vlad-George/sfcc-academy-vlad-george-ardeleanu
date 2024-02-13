@@ -9,6 +9,12 @@ server.get('HelloWorld', function (req, res, next) {
     });
 
     return next();
-})
+});
+
+server.get('SessionVariable', function(req, res, next){
+    res.render('training/session_var')
+    
+    return next();
+});
 
 module.exports = server.exports();
