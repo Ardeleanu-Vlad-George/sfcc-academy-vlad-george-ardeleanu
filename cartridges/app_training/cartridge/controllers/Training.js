@@ -37,4 +37,13 @@ server.get('TestDecorator', function(req, res, next){
     return next();
 });
 
+server.get('BasketList', function(req, res, next){
+    const BasketMgr = require('dw/order/BasketMgr');
+    const currentBasket = BasketMgr.getCurrentBasket();
+    res.render('training/basket_list', {
+        basket : currentBasket
+    });
+    return next();
+});
+
 module.exports = server.exports();

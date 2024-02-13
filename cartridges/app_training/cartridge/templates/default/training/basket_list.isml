@@ -1,0 +1,10 @@
+<isdecorate template="common/layout/page">
+    <h1>The ordered items of my basket</h1>
+    <ol>
+        <isloop items="${pdict.basket.allProductLineItems}" var="item">
+            <li>
+                ${item.product.name}
+            </li>
+        </isloop>
+    </ol>
+</isdecorate>
