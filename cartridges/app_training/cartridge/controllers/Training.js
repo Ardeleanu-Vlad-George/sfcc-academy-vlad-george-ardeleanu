@@ -19,7 +19,7 @@ server.get('SessionVariable', function(req, res, next){
 
 server.get('ShowProduct', function(req, res, next){
     const ProductMgr = require('dw/catalog/ProductMgr');
-    
+
     const selected = ProductMgr.getProduct(req.querystring.pid);
 
     res.render('training/finding_product', {
@@ -31,5 +31,10 @@ server.get('ShowProduct', function(req, res, next){
     return next();
 });
 
+
+server.get('TestDecorator', function(req, res, next){
+    res.render('training/test_decorator');
+    return next();
+});
 
 module.exports = server.exports();
