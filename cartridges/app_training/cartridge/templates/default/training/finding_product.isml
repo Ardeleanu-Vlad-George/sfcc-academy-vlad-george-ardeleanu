@@ -13,7 +13,7 @@
     <h1>Including another template file</h1>
 
     <isinclude 
-        template="training/testID"
+        template="training/components/testID"
     />
 
 </isdecorate>
