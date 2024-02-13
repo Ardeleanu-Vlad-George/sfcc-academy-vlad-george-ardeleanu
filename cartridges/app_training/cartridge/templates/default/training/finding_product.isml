@@ -1,0 +1,3 @@
+<h4>Given ID:<br/> ${pdict.givenID}</h4>
+<h4>Was the product found?<br/> ${pdict.found}</h4>
+<h4>Another attribute of product, optionModel:<br/> ${pdict.product.optionModel}</h4>
