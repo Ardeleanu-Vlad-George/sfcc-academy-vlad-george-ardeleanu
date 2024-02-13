@@ -1,3 +1,6 @@
 <h4>Given ID:<br/> ${pdict.givenID}</h4>
 <h4>Was the product found?<br/> ${pdict.found}</h4>
-<h4>Another attribute of product, optionModel:<br/> ${pdict.product.optionModel}</h4>
+<h4>Another attribute of product, .optionModel:<br/> ${pdict.product.optionModel}</h4>
+
+<h1>Showing product by including endpoints of existing controllers</h1>
+<isinclude url="${URLUtils.url('Tile-Show', 'pid', pdict.givenID)}"/>
