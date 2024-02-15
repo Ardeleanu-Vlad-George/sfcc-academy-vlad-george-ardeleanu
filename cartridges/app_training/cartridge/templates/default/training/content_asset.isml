@@ -1,0 +1,12 @@
+<isdecorate template="common/layout/page.isml">
+    <iscomment>
+        Line (1) is neccesary for line (2) to work
+    </iscomment>
+
+    <iscomment>(1)</iscomment>
+    <isinclude template="components/modules" sf-toolkit="off"/>
+    <h1>This is a custom content asset</h1>
+
+    <iscomment>(2)</iscomment>
+    <iscontentasset aid="student_guide_content_asset"/>
+</isdecorate>

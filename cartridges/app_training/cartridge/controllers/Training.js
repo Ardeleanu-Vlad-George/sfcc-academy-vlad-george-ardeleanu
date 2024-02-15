@@ -31,6 +31,11 @@ server.get('ShowProduct', function(req, res, next){
     return next();
 });
 
+server.get('ContentAsset', function(req, res, next){
+    res.render('training/content_asset');
+    return next();
+});
+
 
 server.get('TestDecorator', function(req, res, next){
     res.render('training/test_decorator');
