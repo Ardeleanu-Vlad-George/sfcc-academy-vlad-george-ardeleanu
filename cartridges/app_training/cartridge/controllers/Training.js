@@ -37,6 +37,24 @@ server.get('ContentAsset', function(req, res, next){
 });
 
 
+server.get('AssetsFromMyFolder', function(req, res, next){
+    const dw = require('dw');
+    let assetsFolder = dw.content.ContentMgr.getFolder('student_guide_folder');
+    if(!empty(assetsFolder)){
+        let assetMap = assetsFolder.getOnlineContent();
+        if(assetMap.size() > 0){
+            let assets = new dw.util.ArrayList();
+            for(let i=0; i < assetMap.size(); i++){
+                assets.add(assetMap[i].getID());
+            }
+            res.render('training/folder_of_assets', {
+                assets : assets
+            });
+        }
+    }
+    return next();
+});
+
 server.get('TestDecorator', function(req, res, next){
     res.render('training/test_decorator');
     return next();

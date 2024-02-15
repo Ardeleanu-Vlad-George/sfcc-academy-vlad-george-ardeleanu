@@ -1,0 +1,6 @@
+<isinclude template="/components/modules"/>
+<isdecorate template="/common/layout/page">
+    <isloop items="${pdict.assets}" var="asset_id">
+        <iscontentasset aid="${asset_id}"/>
+    </isloop>
+</isdecorate>
