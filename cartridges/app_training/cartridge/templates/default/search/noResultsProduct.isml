@@ -1,0 +1,6 @@
+<h1>Beneath this header element is the content slot. It's manipulated by both developer and merchant</h1>
+<isslot
+    id="header_banner"
+    description="The developer made this content slot in code, the merchant can add configurations to it"
+    context="global"
+/>
