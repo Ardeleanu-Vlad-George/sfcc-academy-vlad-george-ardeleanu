@@ -1,0 +1,8 @@
+<isdecorate template="common/layout/page">
+    <h1>What's awesome?</h1>
+    <h1>${pdict.form.correct.awesome.value}</h1>
+    <h1>What's boring?</h1>
+    <h1>${pdict.form.correct.boring.value}</h1>
+    <h1>What's beneath the typo?</h1>
+    <h1>${pdict.form.incorrect.typo.value}</h1>
+</isdecorate>

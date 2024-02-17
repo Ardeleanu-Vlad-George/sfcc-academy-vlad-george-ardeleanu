@@ -1,0 +1,21 @@
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19" secure="false">
+    <group formid="correct">
+        <field
+            formid="boring"
+            label="training.myform.label.boring"
+            type="string"
+        />
+        <field
+            formid="awesome"
+            label="training.myform.label.awesome"
+            type="string"
+        />
+    </group>
+    <group formid="incorrect">
+        <field
+            formid="typo"
+            label="training.myform.label.typo"
+            type="string"
+        />
+    </group>
+</form>

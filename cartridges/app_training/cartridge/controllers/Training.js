@@ -1,5 +1,94 @@
 
 const server = require('server');
+const csrfProtection = require('*/cartridge/scripts/middleware/csrf');
+const consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
+
+server.get(
+    'ShowMyForm',
+    consentTracking.consent,
+    server.middleware.https,
+    csrfProtection.generateToken,
+    function(req, res, next){
+        const urlUtils = require('dw/web/URLUtils');
+        const Resource = require('dw/web/Resource');
+
+        const formData = server.forms.getForm('myform');
+        formData.clear(); //clear the value of the fields
+
+        res.render(
+            'training/myform',
+            {
+                title : Resource.msg('training.myform.title.submit', 'forms', null),
+                formData : formData,
+                actionUrl : urlUtils.url('Training-DataFromMyForm').toString()
+            }
+        );
+        next();
+    }
+);
+
+
+server.post(
+    'DataFromMyForm',
+    server.middleware.https,
+    csrfProtection.validateAjaxRequest,
+    function(req, res, next){
+        //so you get the form by name, name established from the cartridge/forms/default/.xml file
+        //and yes you need to go trough all of those members
+        //first through the group, than to the actual field, than you need to access .value
+        const form = server.forms.getForm('myform');
+
+        res.render('training/myform_data', {
+            form : form
+        });
+        next();
+    }
+);
+
+
+server.get(
+    'ShowExampleForm',
+    consentTracking.consent,
+    server.middleware.https,
+    csrfProtection.generateToken,
+    function (req, res, next){
+        const urlUTILS = require('dw/web/URLUtils');
+        const Resource = require('dw/web/Resource');
+
+        var profileForm  = server.forms.getForm('training');
+        profileForm.clear();
+
+        res.render('training/trainingform', {
+            title : Resource.msg('training.form.title.submit', 'forms', null),
+            profileForm : profileForm,
+            actionUrl : urlUTILS.url('Training-SubmitRegistrationFromExampleForm').toString()
+        });
+
+        next();
+    }
+);
+
+
+server.post(
+    'SubmitRegistrationFromExampleForm',
+    server.middleware.https,
+    consentTracking.consent,
+    csrfProtection.generateToken,
+    function(req, res, next){
+        const Resource = require('dw/web/Resource');
+        const urlUtils = require('dw/web/URLUtils');
+
+        const profileForm = server.forms.getForm('training');
+
+        res.render('training/trainingform',{
+            title : Resource.msg('training.form.title.edit', 'forms', null),
+            profileForm : profileForm,
+            actionUrl : URLUtils.url('Training-SubmitRegistrationFromExampleForm').toString()
+        });
+
+        next();
+    }
+);
 
 //don't forget to access by <base-site-URL> / <ControllerName> - <GivenPath>
 server.get('HelloWorld', function (req, res, next) {
