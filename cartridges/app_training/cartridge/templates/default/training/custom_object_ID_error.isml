@@ -1,0 +1,4 @@
+<isdecorate template="common/layout/page">
+    <h1>An error occured</h1>
+    <h2>Custom object with ID:${pdict.givenID} exists already!</h2>
+</isdecorate>

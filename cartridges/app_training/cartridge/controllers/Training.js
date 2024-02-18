@@ -33,9 +33,9 @@ server.get(
         const Site = require('dw/system/Site');
 
         res.render('training/site_preference',{
-            keys : Object.keys(Site.getCurrent().getPreferences()),
+            keys : Object.keys(Site.getCurrent().getPreferences().custom),
 
-            pref : Site.getCurrent().getPreferences()
+            pref : Site.getCurrent().getPreferences().custom.countryCode
         });
 
         next();
@@ -75,7 +75,7 @@ server.get(
         res.render('training/trainingform', {
             title : Resource.msg('training.form.title.submit', 'forms', null),
             profileForm : profileForm,
-            actionUrl : urlUTILS.url('Training-SubmitRegistrationFromExampleForm').toString()
+            actionUrl : urlUTILS.url('Training-SubmitRegistrationFromExampleForm','newID', req.querystring.newID).toString()
         });
 
         next();
@@ -91,14 +91,39 @@ server.post(
     function(req, res, next){
         const Resource = require('dw/web/Resource');
         const urlUtils = require('dw/web/URLUtils');
+        const UUIDUtils = require('dw/util/UUIDUtils');
+        //needed for custom object creation
+        const CustomObjectMgr = require('dw/object/CustomObjectMgr');
+        const Transaction = require('dw/system/Transaction');
 
-        const profileForm = server.forms.getForm('training');
+        //obviously, this ID manipulation is unnacceptable in production,
+        //but it's good enough for now
+        const objID = req.querystring.newID; //get ID
+        const profileForm = server.forms.getForm('training'); //get form data
+        let object = CustomObjectMgr.getCustomObject("NewsletterSubscription", objID);//get the object by ID
 
-        res.render('training/trainingform',{
-            title : Resource.msg('training.form.title.edit', 'forms', null),
-            profileForm : profileForm,
-            actionUrl : urlUtils.url('Training-SubmitRegistrationFromExampleForm').toString()
-        });
+        //test given ID exists
+        if(!object){
+            //if it doesn't, create the it and use Transaction to store
+            try{
+                Transaction.begin();
+                object = CustomObjectMgr.createCustomObject("NewsletterSubscription", UUIDUtils.createUUID());
+                object.custom.firstName = profileForm.customer.firstname.value;
+                object.custom.lastName = profileForm.customer.lastname.value;
+                Transaction.commit();
+            }catch(err){
+                Transaction.wrap(function(){
+                if(object){
+                        //object.email = profileForm.customer.email.value;
+                    }
+                });
+            };
+            //return a succes response
+            res.render('training/custom_object_succes', {what : Object.values(object.custom)});
+        }else{
+            //otherwise, return an error message
+            res.render('training/custom_object_ID_error', {givenID : objID});
+        }
 
         next();
     }
