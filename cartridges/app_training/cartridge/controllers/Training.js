@@ -97,7 +97,7 @@ server.post(
         res.render('training/trainingform',{
             title : Resource.msg('training.form.title.edit', 'forms', null),
             profileForm : profileForm,
-            actionUrl : URLUtils.url('Training-SubmitRegistrationFromExampleForm').toString()
+            actionUrl : urlUtils.url('Training-SubmitRegistrationFromExampleForm').toString()
         });
 
         next();
