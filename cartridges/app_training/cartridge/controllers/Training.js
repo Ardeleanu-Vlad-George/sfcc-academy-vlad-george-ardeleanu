@@ -27,6 +27,20 @@ server.get(
     }
 );
 
+server.get(
+    'SitePreference',
+    function(req, res, next){
+        const Site = require('dw/system/Site');
+
+        res.render('training/site_preference',{
+            keys : Object.keys(Site.getCurrent().getPreferences()),
+
+            pref : Site.getCurrent().getPreferences()
+        });
+
+        next();
+    }
+);
 
 server.post(
     'DataFromMyForm',

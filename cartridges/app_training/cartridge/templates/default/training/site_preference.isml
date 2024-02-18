@@ -1,0 +1,4 @@
+<isdecorate template="common/layout/page">
+    <h1>${pdict.pref}</h1>
+    <p>${pdict.keys}</p>
+</isdecorate>
