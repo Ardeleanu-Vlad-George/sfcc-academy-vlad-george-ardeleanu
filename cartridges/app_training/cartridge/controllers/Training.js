@@ -75,7 +75,7 @@ server.get(
         res.render('training/trainingform', {
             title : Resource.msg('training.form.title.submit', 'forms', null),
             profileForm : profileForm,
-            actionUrl : urlUTILS.url('Training-SubmitRegistrationFromExampleForm','newID', req.querystring.newID).toString()
+            actionUrl : urlUTILS.url('Training-SubmitRegistrationFromExampleForm').toString()
         });
 
         next();
@@ -98,8 +98,8 @@ server.post(
 
         //obviously, this ID manipulation is unnacceptable in production,
         //but it's good enough for now
-        const objID = req.querystring.newID; //get ID
         const profileForm = server.forms.getForm('training'); //get form data
+        const objID = profileForm.customer.email.value; //get ID
         let object = CustomObjectMgr.getCustomObject("NewsletterSubscription", objID);//get the object by ID
 
         //test given ID exists
@@ -107,19 +107,15 @@ server.post(
             //if it doesn't, create the it and use Transaction to store
             try{
                 Transaction.begin();
-                object = CustomObjectMgr.createCustomObject("NewsletterSubscription", UUIDUtils.createUUID());
+                object = CustomObjectMgr.createCustomObject("NewsletterSubscription", objID);
                 object.custom.firstName = profileForm.customer.firstname.value;
                 object.custom.lastName = profileForm.customer.lastname.value;
                 Transaction.commit();
             }catch(err){
-                Transaction.wrap(function(){
-                if(object){
-                        //object.email = profileForm.customer.email.value;
-                    }
-                });
+                Transaction.wrap(function(){});
             };
             //return a succes response
-            res.render('training/custom_object_succes', {what : Object.values(object.custom)});
+            res.render('training/custom_object_succes');
         }else{
             //otherwise, return an error message
             res.render('training/custom_object_ID_error', {givenID : objID});
